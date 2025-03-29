@@ -172,3 +172,38 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+# Flask/Dash specific
+instance/
+config/*.json
+config/*.yaml
+
+# SQLite database files
+core/store/*.sqlite
+core/store/*.db
+core/store/__pycache__/
+**/_store/*.db
+
+# Logs and debugging
+logs/
+*.log
+*.out
+*.err
+
+# Testing
+.coverage
+htmlcov/
+*.pytest_cache/
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# copy files
+**copy**.html
+**copy**.css
+**copy**.js
+**copy**.**
+**copy**/
