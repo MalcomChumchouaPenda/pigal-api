@@ -1,0 +1,41 @@
+{% extends 'dashboard.jinja' %}
+{% set has_light_header = true %}
+
+{% block page_meta %}
+    <title>{{ current_user.id }} | ENSET Douala</title>
+{% endblock %}
+
+{% block page_main %}
+    <div class="container">
+        <div class="row ms-3 my-2">
+            <div class="d-flex flex-column align-items-start align-items-lg-center">
+                <h3>Espace {{ current_user.id }}</h3>
+                <p class="pt-2 pb-1 pb-lg-5">{{ welcome }}</p>
+            </div>
+        </div>
+
+        <div class="section row ms-3 me-2 g-4 pb-4 pt-2 {% if domains | length < 2 %}d-flex justify-content-center{% endif %}">
+            {% for domain in domains %}
+            <div class="col-lg-6 col-12">
+                <div class="services-info">
+                    <h5>{{ domain.text }}</h5>
+                    <ul class="mt-4 ps-2">
+                        {% for service in domain.services %}
+                        <li class="my-2">
+                            <i class="bi bi-chevron-right"></i>
+                            {% if service.point %}
+                                <a href="{{ url_for(service.point) }}" class="card-link">{{ service.text }}</a>
+                            {% elif service.url %}
+                                <a href="{{ service.url }}" class="card-link">{{ service.text }}</a>
+                            {% else %}
+                                <a href="#" class="card-link">{{ service.text }}</a>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

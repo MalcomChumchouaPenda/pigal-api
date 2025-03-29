@@ -1,0 +1,1161 @@
+
+/*--------------------------------------------------------------
+# Header  Classes Variants
+--------------------------------------------------------------*/
+
+/* header variant colors */
+
+.scrolled .header {
+  --background-color: rgba(0, 0, 0, 90%);
+  box-shadow: none;
+}
+
+.form-wrapper .header,
+.details-wrapper .header,
+.listing-wrapper .header,
+.scrolled.scrolled-light .header {
+  --background-color: rgba(255, 255, 255, 0.95);
+  --default-color: var(--secondary-dark-color);
+  --heading-color: var(--secondary-dark-color);
+  --nav-color: var(--secondary-dark-color);
+  --nav-hover-color: var(--secondary-dark-color);
+}
+
+
+.form-wrapper .header .btn-get-started,
+.form-wrapper .header .btn-get-started:focus,
+.details-wrapper .header .btn-get-started,
+.details-wrapper .header .btn-get-started:focus,
+.listing-wrapper .header .btn-get-started,
+.listing-wrapper .header .btn-get-started:focus,
+.scrolled.scrolled-light .header .btn-get-started,
+.scrolled.scrolled-light .header .btn-get-started:focus {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+}
+
+.form-wrapper .header .btn-get-started:hover,
+.form-wrapper .header .btn-get-started:focus:hover,
+.details-wrapper .header .btn-get-started:hover,
+.details-wrapper .header .btn-get-started:focus:hover,
+.listing-wrapper .header .btn-get-started:hover,
+.listing-wrapper .header .btn-get-started:focus:hover,
+.scrolled.scrolled-light .header .btn-get-started:hover,
+.scrolled.scrolled-light .header .btn-get-started:focus:hover {
+  color: var(--contrast-color);
+  background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+  border-color: transparent;
+}
+
+.form-wrapper .header .btn-switch-lang,
+.form-wrapper .header .btn-switch-lang:focus,
+.details-wrapper .header .btn-switch-lang,
+.details-wrapper .header .btn-switch-lang:focus,
+.listing-wrapper .header .btn-switch-lang,
+.listing-wrapper .header .btn-switch-lang:focus,
+.scrolled.scrolled-light .header .btn-switch-lang,
+.scrolled.scrolled-light .header .btn-switch-lang:focus {
+  color: var(--default-color);
+  background: transparent;
+}
+
+.form-wrapper .header .btn-switch-lang:hover,
+.form-wrapper .header .btn-switch-lang:focus:hover,
+.details-wrapper .header .btn-switch-lang:hover,
+.details-wrapper .header .btn-switch-lang:focus:hover,
+.listing-wrapper .header .btn-switch-lang:hover,
+.listing-wrapper .header .btn-switch-lang:focus:hover,
+.scrolled.scrolled-light .header .btn-switch-lang:hover,
+.scrolled.scrolled-light .header .btn-switch-lang:focus:hover {
+  color: var(--background-color);
+  background-color: var(--default-color);
+  border-color: transparent;
+  /* background-color: color-mix(in srgb, var(--accent-color), transparent 20%); */
+  /* border-color: transparent; */
+  /* color: var(--accent-color); */
+}
+
+
+/*--------------------------------------------------------------
+# Hero Classes
+--------------------------------------------------------------*/
+
+.hero {
+  --background-color: var(--black-color);
+  --default-color: var(--white-color);
+  --heading-color: var(--white-color);
+  --surface-color: var(--black-color);
+  --contrast-color: var(--white-color);
+  color: var(--default-color);
+  background-color: var(--background-color);
+  width: 100%;
+  min-height: 50vh;
+  max-height:60vh;
+  padding: 0;
+  text-align: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+
+.hero .hero-info {
+  position: relative;
+  inset: 0;
+  z-index: 3;
+  padding: 150px 0 60px 0;
+}
+
+.hero.hero-25 .hero-info,
+.hero.hero-50 .hero-info {
+  padding: 160px 0 40px 0;
+}
+
+.hero .hero-info h1 {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.hero .hero-info h2 {
+  font-size: 35px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.hero .hero-info p {
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  font-weight: 400;
+  font-size: var(--h5-font-size);
+  max-width: 100%;
+}
+
+.hero .hero-info ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  font-size: var(--h5-font-size);
+  font-weight: 400;
+
+}
+
+.hero .hero-info a,
+.hero .hero-info ul li>a {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  font-family: var(--heading-font);
+  font-weight: 500;
+  font-size: var(--default-font-size);
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 8px 32px;
+  border-radius: 4px;
+  transition: 0.4s;
+  margin: 15px 10px;
+  animation: fadeInLeft 1s both 0.4s;
+
+}
+
+.hero .hero-bg {
+  inset: 0;
+  position: absolute;
+  overflow: hidden;
+}
+
+.hero .hero-bg img {
+position: absolute;
+inset: 0;
+display: block;
+width: 100%;
+height: 100%;
+object-fit: cover;
+z-index: 1;
+}
+
+.hero .hero-bg::before {
+content: "";
+background-color: color-mix(in srgb, var(--background-color), transparent 20%);
+position: absolute;
+inset: 0;
+z-index: 2;
+}
+
+.hero-info .breadcrumb-item {
+  font-size: var(--h5-font-size);
+  color: var(--accent-color);
+}
+
+.hero-info .breadcrumb-item::before {
+  font-size: var(--h5-font-size);
+  color: var(--contrast-color);
+}
+
+.hero-info .breadcrumb-item.active {
+  color: var(--contrast-color);
+}
+
+.hero-info .breadcrumb-item a {
+  font-size: var(--h5-font-size);
+  font-weight: var(--h5-font-weight);
+  color: var(--accent-color);
+  background: transparent;
+  margin: 0;
+  padding: 0 4px 2px 4px;
+  text-decoration: none;
+  background-image: 
+    linear-gradient(transparent, transparent),
+    linear-gradient(color-mix(in srgb, var(--accent-color), transparent 25%), 
+                    color-mix(in srgb, var(--accent-color), transparent 25%));
+  background-size: 100% 2px, 0 2px;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 400ms;
+}
+
+.hero-info .breadcrumb-item a:hover {  
+  background-size: 0 2px, 100% 2px;
+}
+
+.hero-info .breadcrumb-item::before,
+.hero-info .breadcrumb-item.active  {
+  animation: fadeInLeft 1s both 0.4s;
+}
+
+@media (max-width: 991px) {
+  .hero .hero-info {
+    width: 100%;
+  }
+
+  .hero .hero-info h1 {
+    font-size: 32px;
+  }
+
+  .hero .hero-info h2 {
+    font-size: 25px;
+  }
+
+  .hero .hero-info p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 991px),
+(max-height: 480px) {
+  .hero .hero-info {
+    padding: 150px 0 10px 0;
+    margin: 0;
+    width: 75%;
+  }
+}  
+
+.hero .btn-get-started {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  font-family: var(--heading-font);
+  font-weight: 500;
+  font-size: var(--default-font-size);
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 8px 32px;
+  border-radius: 4px;
+  transition: 0.4s;
+  margin: 10px;
+  animation: fadeInLeft 1s both 0.4s;
+}
+
+.hero .btn-get-started:hover {
+  opacity: 0.75;
+}
+
+
+/* Hero (Carousel) */
+
+.hero .carousel {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  background-color: var(--background-color);
+  position: relative;
+}
+
+.hero .carousel-item {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* .hero .carousel-item h2 {
+  animation: fadeInDown 1s both;
+} */
+
+.hero .carousel-item img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.hero .carousel-item:before {
+  content: "";
+  background: color-mix(in srgb, var(--background-color), transparent 30%);
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.hero .carousel-item::before {
+  content: "";
+  background-color: color-mix(in srgb, var(--background-color), transparent 30%);
+  position: absolute;
+  inset: 0;
+}
+
+.hero .carousel-container {
+  position: absolute;
+  inset: 90px 64px 34px 44px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 3;
+}
+
+.hero .carousel-item h1,
+.hero .carousel-item h2,
+.hero .carousel-item h3,
+.hero .carousel-item h4,
+.hero .carousel-item h5,
+.hero .carousel-item h6 {
+  animation: fadeInLeft 1s both 0.1s;
+
+}
+
+.hero .carousel-item p {
+  font-size: var(--h5-font-size);
+  width: 100%;
+  animation: fadeInLeft 1s both 0.2s;
+}
+
+.hero .carousel-item .btn-get-started {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  font-family: var(--heading-font);
+  font-weight: 500;
+  font-size: var(--default-font-size);
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 8px 32px;
+  border-radius: 4px;
+  transition: 0.4s;
+  margin: 10px;
+  /* animation: fadeInDown 1s both 0.4s; */
+}
+
+.hero .carousel-item .btn-get-started:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+
+.hero .carousel-control-prev,
+.hero .carousel-control-next {
+  width: 10%;
+  transition: 0.3s;
+  opacity: 0.5;
+}
+
+.hero .carousel-control-prev:focus,
+.hero .carousel-control-next:focus {
+  opacity: 0.5;
+}
+
+.hero .carousel-control-prev:hover,
+.hero .carousel-control-next:hover {
+  opacity: 0.9;
+}
+
+/* desktop */
+@media (min-width: 992px) {
+  .hero .carousel-item p {
+    width: 75%;
+  }
+
+  .hero .carousel-control-prev,
+  .hero .carousel-control-next {
+    width: 5%;
+  }
+}
+
+.hero .carousel-control-next-icon,
+.hero .carousel-control-prev-icon {
+  background: none;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.hero .carousel-indicators {
+  list-style: none;
+}
+
+.hero .carousel-indicators li {
+  cursor: pointer;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+} 
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+
+/* Hero variants */
+
+.hero.hero-large,
+.hero.hero-100 {
+  min-height: 100vh;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+
+.hero.hero-75 {
+  min-height: 75vh;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+  
+.hero.hero-50 {
+min-height:50vh;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+  
+.hero.hero-small,
+.hero.hero-25 {
+  min-height:25vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.listing-wrapper .hero{
+  --background-color: var(--white-color);
+  --default-color: var(--secondary-dark-color);
+  --heading-color: var(--secondary-dark-color);
+  --surface-color: var(--white-color);
+  --contrast-color: var(--white-color);
+  width: 100%;
+  min-height: 15%;
+  position: relative;
+  padding: 120px 0 0 150px;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+}
+
+.listing-wrapper .hero .container {
+  margin: 0;
+}
+
+.details-wrapper .hero{
+  width: 0%;
+  min-height: 0;
+}
+
+.form-wrapper .hero{
+  min-height: 0;
+  max-height: 0;
+}
+
+
+.coming-soon-hero {
+  margin-top: 100px;
+}
+
+.coming-soon-hero .countdown {
+  margin-top: 25px;
+}
+
+.coming-soon-hero .countdown div {
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  margin: 10px 10px;
+  width: 100px;
+  padding: 15px 0;
+  background-color: var(--secondary-light-color);
+}
+
+.coming-soon-hero .countdown div h3 {
+  font-family: var(--default-font);
+  font-weight: 700;
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.coming-soon-hero .countdown div h4 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+@media (max-width: 991px) {
+  
+  .listing-wrapper .hero{
+    padding: 120px 10px 0 20px;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+  }
+
+  .coming-soon-hero {
+    padding: 0 50px;
+  }
+
+  .coming-soon-hero .countdown div {
+    width: 70px;
+    padding: 10px 0;
+    margin: 10px 8px;
+  }
+
+  .coming-soon-hero .countdown div h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .coming-soon-hero .countdown div h4 {
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+
+
+/*--------------------------------------------------------------
+# Main Classes
+--------------------------------------------------------------*/
+
+.main {
+  min-height: 85vh;
+}
+
+.main .section {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  padding: 20px 10px;
+  scroll-margin-top: 92px;
+  overflow: clip;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.main p.empty {
+  font-size: var(--default-font-size);
+  font-weight: var(--default-font-weight);
+}
+
+.main .alert {
+  border-color: transparent;
+}
+
+/* main variants */
+
+.listing-wrapper .main {
+  padding: 10px 50px 0 150px;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+}
+
+.form-wrapper .main {
+  --background-color: var(--white-color);
+  --default-color: var(--secondary-dark-color);
+  --heading-color: var(--secondary-dark-color);
+  --surface-color: var(--white-color);
+  --contrast-color: var(--white-color);
+  width: 100%;
+  min-height: 85vh;
+  position: relative;
+  padding: 140px 0 0 0;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  overflow: auto;
+}
+
+.details-wrapper .main{
+  width: 100%;
+  min-height: 85vh;
+  position: relative;
+  padding: 140px 0 0 0;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+}
+
+@media (max-width: 991px) {
+  .listing-wrapper .main {
+    padding: 10px 10px 0 20px;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+  }
+
+  .main .section {
+    scroll-margin-top: 76px;
+    padding: 40px 25px 20px 10px;
+  }
+}
+
+
+/* Section titles */
+
+.section h1 {
+  font-size: var(--h1-font-size);
+  font-weight: var(--h1-font-weight);
+  line-height: 1.5;
+}
+.section h2 {
+  font-size: var(--h2-font-size);
+  font-weight: var(--h2-font-weight);
+  line-height: 1.5;
+}
+.section h3 {
+  font-size: var(--h3-font-size);
+  font-weight: var(--h3-font-weight);
+  line-height: 1.5;
+}
+.section h4 {
+  font-size: var(--h4-font-size);
+  font-weight: var(--h4-font-weight);
+  line-height: 1.5;
+}
+.section h5 {
+  font-size: var(--h5-font-size);
+  font-weight: var(--h5-font-weight);
+  line-height: 1.5;
+}
+
+.section h6 {
+  font-size: var(--h6-font-size);
+  font-weight: var(--h6-font-weight);
+  line-height: 1.5;
+}
+
+.section p {
+  margin-bottom: 5px;
+}
+
+.section .section-title {
+  padding-bottom: 25px;
+  position: relative;
+}
+
+.section .section-title h2 {
+font-size: 12px;
+font-weight: 500;
+padding: 0;
+line-height: 1px;
+margin: 0;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: color-mix(in srgb, var(--default-color), transparent 50%);
+position: relative;
+}
+
+.section .section-title h2::after {
+content: "";
+width: 120px;
+height: 1px;
+display: inline-block;
+background: var(--accent-color);
+margin: 4px 10px;
+}
+
+.section .section-title p,
+.section .section-title div  {
+  color: var(--heading-color);
+  margin: 10px 0 0 0;
+  font-size: var(--h1-font-size);
+  font-weight: var(--h1-font-weight);
+  font-family: var(--heading-font);
+}
+
+.section .section-title .sub-title b,
+.section .section-title .sub-title strong {
+  color: var(--accent-color);
+  font-size: var(--h1-font-size);
+  font-weight: var(--h1-font-weight);
+} 
+
+
+/* Section controls */
+
+.section .btn.btn-view-all {
+  color: var(--contrast-color);
+  margin-top: 22px;
+  padding: 15px 50px;
+  font-size: var(--h5-font-size);
+  font-weight: 400;
+  border-radius: 8px;
+}
+
+
+/* 
+Underline styles - details of technique here: 
+https://nickymeuleman.netlify.app/blog/css-animated-wrapping-underline 
+*/
+
+.section .btn-link,
+.section a {
+  margin: 5px;
+  padding: 0 2px 5px 2px;
+  color: var(--accent-color);
+  font-size: var(--default-font-size);
+  font-weight: var(--default-font-weight);
+  text-decoration: none;
+  background-image: 
+    linear-gradient(transparent, transparent),
+    linear-gradient(color-mix(in srgb, var(--accent-color), transparent 25%), 
+                    color-mix(in srgb, var(--accent-color), transparent 25%));
+  background-size: 100% 1px, 0 1px;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 400ms;
+}
+
+.section .btn-link:hover,
+.section a:hover {  
+  background-size: 0 1px, 100% 1px;
+}
+
+
+/*--------------------------------------------------------------
+# features Section
+--------------------------------------------------------------*/
+.features .features-item {
+  position: relative;
+  padding: 15px;
+}
+    
+.features .features-item .card {
+  margin: 0;
+  border: none;
+  margin-bottom: 30px;
+  background-color: transparent;
+}
+
+.features .features-item .card p {
+  font-size: var(--default-font-size);
+  font-weight: var(--default-font-weight);
+  margin: 0;
+  padding: 0;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.features .features-item .icon {
+  margin-right: 20px;
+}
+    
+.features .features-item .icon i {
+    color: var(--accent-color);
+    font-size: 40px;
+    line-height: 0;
+    transition: 0.3s;
+}
+    
+.features .features-item .card-title {
+    color: var(--heading-color);
+    font-size: var(--h1-font-size);
+    font-weight: var(--h1-font-weight);
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+    
+.features .features-item .card-text {
+    font-size: var(--default-font-size);
+    font-weight: var(--default-font-weight);
+    color: color-mix(in srgb, var(--default-color), transparent 20%);;
+    margin-bottom: 10px;
+    /* text-align: justify;
+    text-justify: inter-word; */
+}
+    
+.features .features-item .btn-read-more {
+    display: flex;
+    align-items: center;
+    color: color-mix(in srgb, var(--default-color), transparent 50%);
+    transition: 0.3s;
+    font-weight: var(--h1-font-weight);
+    font-size: var(--default-font-size);
+    background: none;
+}
+    
+.features .features-item .btn-read-more:hover{
+  background: none;
+  color: var(--accent-color);
+}
+
+.features .features-item .btn-read-more i {
+    margin-left: 8px;
+}
+  
+    /* .features .features-item:hover .card-title,
+.features .features-item:hover .btn-read-more,
+.features .features-item:hover .icon i {
+    color: var(--accent-color);
+} */
+  
+
+.features .btn {
+      margin: 12px 2px 5px 2px;
+      /* font-size: 12px; */
+      border-radius: 3px;
+}
+  
+
+/* feature numbered  */
+
+.features-numbered .card {
+  background-color: var(--surface-color);
+  color: var(--default-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-radius: 0;
+  padding: 20px;
+  margin: 0;
+}
+
+.features-numbered .card .card-header {
+  display: block;
+  font-size: var(--h4-font-size);
+  font-weight: var(--h4-font-weight);
+  color: var(--accent-color);
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.features-numbered .card .card-title {
+  color: color-mix(in srgb, var(--heading-color), transparent 20%);
+  font-size: var(--h4-font-size);
+  font-weight: var(--h4-font-weight);
+  padding: 0;
+  margin: 20px 0;
+}
+
+
+.features-numbered .card-body {
+  margin: 0;
+  padding: 0;
+}
+
+.features-numbered .card-link {
+  font-size: var(--default-font-size);
+  padding-top: 12px;
+}
+
+
+.features-numbered .card-footer {
+  border: none;
+  background-color: transparent;
+}
+
+.features-numbered.light-background .card {
+  background-color: transparent;
+  border: none;
+}
+
+
+/*--------------------------------------------------------------
+# features imaged
+--------------------------------------------------------------*/
+.features-imaged .card {
+  padding: 0;
+  background-color: color-mix(in srgb, var(--inverted-background-color), transparent 30%);
+  border-color: color-mix(in srgb, var(--inverted-background-color), transparent 25%);
+}
+
+.features-imaged .img {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.features-imaged .card-body {
+  padding: 15px;
+}
+
+.features-imaged .card .card-title {
+  color: color-mix(in srgb, var(--heading-color), transparent 20%);
+  font-size: var(--h4-font-size);
+  font-weight: var(--h1-font-weight);
+  padding: 0;
+  margin: 10px 0;
+}
+
+.features-imaged .card-link {
+  font-size: var(--default-font-size);
+  padding-top: 12px;
+}
+
+.features-imaged .card-footer {
+  border: none;
+  background-color: transparent;
+}
+
+
+/*--------------------------------------------------------------
+# Results Section
+--------------------------------------------------------------*/
+
+.results p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/*--------------------------------------------------------------
+# Speech Section
+--------------------------------------------------------------*/
+
+.speech-item {
+  box-sizing: content-box;
+  min-height: 200px;
+  position: relative;
+}
+
+.speech-item .speech-author img {
+  max-width: 70%;
+  border-radius: 10px;
+  border: 1px solid var(--background-color);
+}
+
+.speech-item .speech-author-name {
+  margin: 10px 0 5px 5px;
+}
+
+.speech-item .speech-author-role {
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  margin: 0 5px 0 5px;
+}
+
+
+.speech-item .speech-content p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.speech-item .speech-content ul {
+  list-style: none;
+  padding: 0 0 0 22px;
+}
+
+.speech-item .speech-content ul li {
+  margin-top: 0;
+}
+
+.speech-item .speech-content ul i {
+font-size: var(--h3-font-size);
+color: var(--accent-color);
+margin-left: -22px;
+margin-right: 0;
+line-height: 0;
+}
+
+
+/*--------------------------------------------------------------
+# section about
+--------------------------------------------------------------*/
+
+.about-content p {  
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.about-content ul {
+  list-style: none;
+  padding: 0;
+  /* font-size: 15px; */
+}
+  
+.about-content ul li {
+  display: flex;
+  align-items: center;
+}
+
+.about-content ul li p {
+  padding-bottom: 10px;
+}
+  
+.about-content ul li>a {
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+}
+
+.about-content ul li>i {
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--accent-color);
+  padding-top: 2px;
+  margin-right: 10px;
+  /* line-height: 0; */
+}
+
+.about-content img {
+  border-radius: 2%;
+}
+
+/*--------------------------------------------------------------
+# Stats Section
+--------------------------------------------------------------*/
+.stats .stats-item {
+    padding: 20px 30px;
+    width: 100%;
+}
+    
+.stats .stats-item i {
+    color: var(--accent-color);
+    display: block;
+    font-size: 30px;
+    float: left;
+    line-height: 0;
+}
+    
+.stats .stats-item .purecounter {
+    color: var(--heading-color);
+    font-size: 35px;
+    line-height: 30px;
+    display: block;
+    font-weight: var(--h1-font-weight);
+    margin-left: 60px;
+}
+    
+.stats .stats-item p {
+    color: color-mix(in srgb, var(--default-color), transparent 40%);
+    padding: 15px 0 0 0;
+    margin: 0 0 0 60px;
+    font-family: var(--heading-font);
+    font-size: var(--default-font-size);
+}
+
+
+/*--------------------------------------------------------------
+# Details classes
+--------------------------------------------------------------*/
+
+.details-info {
+  padding: 15px;
+  height: 100%;
+  background: transparent;
+}
+
+.details-info p {  
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.details-info.details-rounded {
+  border-radius: 5px;
+  background: var(--secondary-light-color);
+}
+
+
+/*--------------------------------------------------------------
+# events section
+--------------------------------------------------------------*/
+.events img {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.events .card {
+  border-color: transparent;
+}
+
+.events-title {
+  color: color-mix(in srgb, var(--heading-color), transparent 20%);
+  /* font-size: var(--h5-font-size);
+  font-weight: var(--h5-font-weight); */
+  padding: 0;
+  margin: 10px 0;
+}
+
+.events-title a {
+  font-size: inherit;
+  font-weight: inherit;
+  background: none;
+  margin: 0;
+  color: var(--default-color);
+}
+
+.events-title a:hover{
+  background: none;
+  color: var(--accent-color);
+}
+
+.events-category,
+.events-date {
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+}
+
+
+
+.events .card p {
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  font-size: var(--default-font-size);
+  margin: 0;
+  padding: 0;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.events .card-link {
+  font-size: var(--default-font-size);
+  padding-top: 12px;
+}
+
+.events .card-footer {
+  border: none;
+  background-color: transparent;
+}
+

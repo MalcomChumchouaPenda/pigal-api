@@ -13,12 +13,13 @@ Ce template permet de devolopper des services utilisables sur des sites ou porta
 ├── requirements.txt           # Dépendances du projet
 ├── README.md                  # Documentation du projet
 │
-├── /services                  # Contient les microservices Flask ou API
+├── /services                  # Microservices Flask ou API
 │   ├── /auth                  # Service d'authentification
 │   ├── /courses               # Service de gestion des formations (Demo)
 │
+├── /pages                     # Pages du site web (Par defaut vide)
 ├── /core                      # Fonctions, paramètres, ressources et routes principales
-├── /tests                     # Contient les tests unitaires et d'intégration
+├── /tests                     # Tests unitaires et d'intégration
 ├── /migrations                # Fichiers de migration pour SQLAlchemy
 ```
 

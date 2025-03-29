@@ -1,0 +1,31 @@
+
+{% extends 'landing-form.jinja' %}
+{% set has_light_header = true %}
+
+{% block page_meta %}
+  <title>{{ meta_title }} | ENSET Douala</title>
+{% endblock %}
+
+{% block page_main %}
+<div class="message container d-flex flex-column justify-content-center">
+    <div class="row justify-content-center pt-3">
+        <div class="col-10 col-md-6">
+            <div class="message-icon my-3">
+                <h2><i class="bi bi-check-circle"></i></h2>                
+            </div>
+            <h4 class="message-title">{{ title }}</h4>            
+            <p class="message-content py-1">{{ message | safe }}</p>        
+            <div class="d-flex justify-content-start my-0">
+                <div class="d-flex flex-column justify-content-start align-items-start my-0">
+                {% for action in actions %}
+                    <a href="{{ url_for_entry(action) }}" class="btn btn-link px-0">
+                        <h6>{{ action.text }}<i class="bi bi-arrow-right mx-1"></i></h6>
+                    </a>
+                {% endfor %}
+                </div>
+            </div>  
+        </div>
+    </div>    
+</div>
+{% endblock %}
+   
