@@ -61,25 +61,42 @@ def create_app(name, env_name='dev'):
     return app
 
 
-# PAGES/SERVICES REGISTRATION
+# PAGES REGISTRATION
 
 def register_pages(app):
     if os.path.isdir(PAGES_DIR):
         print('Register pages')
 
 
+# SERVICES REGISTRATION
+
 def register_services(app):
     if os.path.isdir(SERVICES_DIR):
-        for name in os.listdir(SERVICES_DIR):
-            try:
-                modulename = f'services.{name}.routes'
-                module = import_module(modulename)
-                api = getattr(module, 'api')
-            except ModuleNotFoundError:
-                continue
+        _register_api(app)
+        _init_data(app)
+
+def _register_api(app):
+   for name in os.listdir(SERVICES_DIR):
+        try:
+            modulename = f'services.{name}.routes'
+            module = import_module(modulename)
+            api = getattr(module, 'api')
             prefix = '/auth' if name == 'auth' else f'/api/{name}'
             app.register_blueprint(api, url_prefix=prefix)
             print('Register service:', name)
+        except (ModuleNotFoundError, AttributeError):
+            continue
+
+def _init_data(app):
+    with app.app_context():
+        for name in os.listdir(SERVICES_DIR):
+            try:
+                modulename = f'services.{name}.defaults'
+                module = import_module(modulename)
+                getattr(module, 'init_data')()
+                print('Init data:', name)
+            except (ModuleNotFoundError, AttributeError):
+                continue
 
 
 # BLUEPRINT FACTORY METHODS +  SECURITY METHODS

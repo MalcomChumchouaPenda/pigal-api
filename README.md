@@ -17,7 +17,6 @@ Ce template permet de devolopper des services utilisables sur des sites ou porta
 │   ├── /auth                  # Service d'authentification
 │   ├── /courses               # Service de gestion des formations (Demo)
 │
-├── /pages                     # Pages du site web (Par defaut vide)
 ├── /core                      # Fonctions, paramètres, ressources et routes principales
 ├── /tests                     # Tests unitaires et d'intégration
 ├── /migrations                # Fichiers de migration pour SQLAlchemy
@@ -55,14 +54,13 @@ Le dossier `services/` contient les microservices gérant différentes fonctionn
 │   ├── routes.py          # Routes de l'API Auth
 │   ├── schemas.py         # Modèles de base de données pour Auth
 │   ├── queries.py         # Requêtes de base de données pour Auth
+│   ├── defaults.py        # Generateurs des donnees par defaut de l'API Auth
 │
 ├── /courses               # API pour gérer les formations (demo)
 │   ├── routes.py          # Routes de l'API Formations
 │   ├── schemas.py         # Modèles de base de données pour Formations
 │   ├── queries.py         # Requêtes de base de données pour Formations
-│
-├── constants.py           # Contient les constantes utilisées par les API
-├── register.py            # Enregistre tous les microservices
+│   ├── defaults.py        # Generateurs des donnees par defaut pour Formations
 ```
 
 
