@@ -10,18 +10,15 @@ if root_dir not in sys.path:
 import pytest
 from core.config import db
 from core.utils import create_app
-from services.config import register_services
-from services.auth.queries import init_users
+from services.auth.defaults import init_data
 
 
 @pytest.fixture
 def app():
     """Fixture qui crée une instance de l'application Flask pour les tests."""
-    app = create_app('test', env_name='test')
+    app = create_app(__name__, env_name='test')
     with app.app_context():
-        init_users()
-
-    register_services(app)
+        init_data()
     yield app
 
     with app.app_context():

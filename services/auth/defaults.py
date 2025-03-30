@@ -3,7 +3,7 @@ from core.config import db
 from .schemas import User, Role
 
 
-def init_users():
+def init_data():
     if not Role.query.first():
         roles = [
             Role(id='admin', name='Admin'),

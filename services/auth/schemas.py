@@ -15,6 +15,7 @@ class Role(db.Model):
     __bind_key__ = 'auth'
     id = db.Column(db.String(50), primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
+    print('create role')
 
 class User(db.Model, UserMixin):
     __bind_key__ = 'auth'

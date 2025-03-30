@@ -25,14 +25,6 @@ def create_app(name, env_name='dev'):
     app.config.from_object(config[env_name])
     # print(app.root_path)
 
-    # initialisation de la base de donnees
-    db.init_app(app)
-    migrate.init_app(app, db)
-    with app.app_context():
-        if env_name in ['dev', 'env']:
-            db.drop_all()
-        db.create_all()
-
     # initialisation de la securite
     login_manager.init_app(app)
     principal.init_app(app)
@@ -58,6 +50,18 @@ def create_app(name, env_name='dev'):
     # pages or services registration
     register_services(app)
     register_pages(app)
+    
+    # initialisation de la base de donnees
+    db.init_app(app)
+    migrate.init_app(app, db)
+    with app.app_context():
+        if env_name in ['dev', 'test']:
+            db.drop_all()
+            print('drop all table')
+        db.create_all()
+        print('create all table')
+        if env_name in ['dev', 'prod']:
+            init_data()
     return app
 
 
@@ -72,23 +76,19 @@ def register_pages(app):
 
 def register_services(app):
     if os.path.isdir(SERVICES_DIR):
-        _register_api(app)
-        _init_data(app)
+        for name in os.listdir(SERVICES_DIR):
+                try:
+                    modulename = f'services.{name}.routes'
+                    module = import_module(modulename)
+                    api = getattr(module, 'api')
+                    prefix = '/auth' if name == 'auth' else f'/api/{name}'
+                    app.register_blueprint(api, url_prefix=prefix)
+                    print('Register service:', name)
+                except (ModuleNotFoundError, AttributeError):
+                    continue
 
-def _register_api(app):
-   for name in os.listdir(SERVICES_DIR):
-        try:
-            modulename = f'services.{name}.routes'
-            module = import_module(modulename)
-            api = getattr(module, 'api')
-            prefix = '/auth' if name == 'auth' else f'/api/{name}'
-            app.register_blueprint(api, url_prefix=prefix)
-            print('Register service:', name)
-        except (ModuleNotFoundError, AttributeError):
-            continue
-
-def _init_data(app):
-    with app.app_context():
+def init_data():
+    if os.path.isdir(SERVICES_DIR):
         for name in os.listdir(SERVICES_DIR):
             try:
                 modulename = f'services.{name}.defaults'
@@ -147,7 +147,6 @@ class Api(Blueprint):
                 return f(*args, **kwargs)
             return decorated_function
         return decorator
-
 
     @classmethod
     def docs(cls, docname, methods=['GET']):
