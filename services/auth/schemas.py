@@ -1,7 +1,7 @@
 
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from core.configs import db, login_manager
+from core.config import db, login_manager
 
 
 # Association table for many-to-many relationship

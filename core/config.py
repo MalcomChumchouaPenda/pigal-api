@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_principal import Principal
 from flask_babel import Babel
 from flask_migrate import Migrate
+from flasgger import Swagger
 from .constants import SERVICES_DIR, STORE_DIR, ROOT_DIR, TESTS_DIR
 
 
@@ -17,6 +18,26 @@ principal = Principal()
 
 # internationalization objects
 babel = Babel()
+
+# api cdocumentation object
+swagger_config = {
+    "headers": [],
+    "specs": [
+        {
+            "endpoint": 'apispec',
+            "route": '/apispec.json',
+            "rule_filter": lambda rule: True,  # all in
+            "model_filter": lambda tag: True,  # all in
+        }
+    ],
+    "static_url_path": "/flasgger_static",
+    # "static_folder": "static",  # must be set by user
+    "swagger_ui": True,
+    "specs_route": "/apidocs/"
+}
+
+swagger = Swagger(config=swagger_config)
+# swagger = Swagger()
 
 
 # default database

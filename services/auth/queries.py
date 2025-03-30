@@ -1,4 +1,4 @@
-from core.configs import db
+from core.config import db
 from .schemas import User, Role
 
 

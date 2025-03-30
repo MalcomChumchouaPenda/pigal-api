@@ -3,26 +3,15 @@ import os
 import click
 from flask import request, redirect, session, url_for, send_file
 from core import create_app, read_markdown, is_file, SERVICES_DIR, PAGES_DIR
-from services import register_services, init_data
-from pages import register_pages
-
+# from services import register_services, init_data
 
 
 # APP CREATION
 
 env_name = os.getenv('FLASK_ENV', 'dev')
 app = create_app(__name__, env_name=env_name)
-register_pages(app)
-register_services(app)
-init_data(app)
-
-
-# JINJA TEMPLATES PROCESSORS
-
-# @app.context_processor
-# def inject_constants():
-#     # raise RuntimeError('test')
-#     return JINJA_CONSTANTS
+# register_services(app)
+# init_data(app)
 
 
 # APP CLASSIC ROUTES

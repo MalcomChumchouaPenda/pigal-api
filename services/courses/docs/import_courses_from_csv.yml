@@ -1,0 +1,11 @@
+Import all courses
+---
+tags:
+  - courses
+parameters: []
+definitions:
+  Courses:
+    type: object
+responses:
+  200:
+    description: Confirmation message

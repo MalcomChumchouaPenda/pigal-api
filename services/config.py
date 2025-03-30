@@ -1,9 +1,9 @@
 
-from .auth.routes import auth_api
-from .courses.routes import courses_api
+# from .auth.routes import auth_api
+# from .courses.routes import courses_api
 
-from .auth.queries import init_users
-from .courses.queries import init_courses
+# from .auth.queries import init_users
+# from .courses.queries import init_courses
 
 
 def register_services(app):

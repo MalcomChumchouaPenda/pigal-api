@@ -2,7 +2,7 @@
 import io
 import json
 import pytest
-from core.configs import db
+from core.config import db
 from services.courses.schemas import Course, Training, Unit, Domain, Diploma
 
 

@@ -1,5 +1,5 @@
 
-from core.configs import db
+from core.config import db
 
 
 CASCADE = "all, delete-orphan"

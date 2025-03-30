@@ -1,2 +1,0 @@
-
-JINJA_CONSTANTS = {}

@@ -8,9 +8,9 @@ if root_dir not in sys.path:
 
 
 import pytest
-from core.configs import db
+from core.config import db
 from core.utils import create_app
-from services.register import register_services
+from services.config import register_services
 from services.auth.queries import init_users
 
 

@@ -1,5 +1,5 @@
 import pytest
-from core.configs import db
+from core.config import db
 from services.courses.queries import get_courses, get_domains, get_labs, get_departments
 from services.courses.schemas import Course, Training, Unit, Domain, Diploma
 

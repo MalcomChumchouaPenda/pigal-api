@@ -1,6 +1,6 @@
 
 import csv
-from core.configs import db
+from core.config import db
 from core.utils import get_path
 from .schemas import Course, Training, Unit, Domain, Diploma
 

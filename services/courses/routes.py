@@ -1,7 +1,7 @@
 import io
 from flask import request, jsonify
-from core.utils import create_api
-from core.configs import db
+from core.utils import create_api, swag_from
+from core.config import db
 from .schemas import Course
 from .queries import (
     get_courses, 
@@ -14,10 +14,11 @@ from .queries import (
 )
 
 
-courses_api = create_api('courses_api', __name__)
+api = create_api('courses_api', __name__)
 
 
-@courses_api.route('/', methods=['GET'])
+@api.route('/', methods=['GET'])
+@api.docs('list_courses.yml')
 def list_courses():
     training_id = request.args.get('training')
     unit_id = request.args.get('unit')
@@ -30,7 +31,7 @@ def list_courses():
                      "diploma": course.diploma.name} 
                             for course in courses])
 
-@courses_api.route("/<course_id>", methods=["PUT"])
+@api.route("/<course_id>", methods=["PUT"])
 def update_course(course_id):
     course = Course.query.filter_by(id=course_id).first()
     if not course:
@@ -43,7 +44,7 @@ def update_course(course_id):
     db.session.commit()
     return {"message": "Course updated"}, 200
 
-@courses_api.route("/<course_id>", methods=["DELETE"])
+@api.route("/<course_id>", methods=["DELETE"])
 def delete_course(course_id):
     course = Course.query.filter_by(id=course_id).first()
     if not course:
@@ -53,7 +54,8 @@ def delete_course(course_id):
     db.session.commit()
     return "", 204
 
-@courses_api.route("/import", methods=["POST"])
+@api.route("/import", methods=["POST"])
+@api.docs('import_courses_from_csv.yml', methods=["POST"])
 def import_courses_from_csv():
     if "file" not in request.files:
         return {"message": "No file provided"}, 400
@@ -67,8 +69,8 @@ def import_courses_from_csv():
     return {"imported": imported_count, "errors":errors}, 201
 
 
-@courses_api.route('/domains', methods=['GET'])
-@courses_api.route('/domains/', methods=['GET'])
+@api.route('/domains', methods=['GET'])
+@api.route('/domains/', methods=['GET'])
 def list_domains():
     training_id = request.args.get('training')
     unit_id = request.args.get('unit')
@@ -79,7 +81,7 @@ def list_domains():
                             for domain in courses])
 
 
-@courses_api.route("/domains/import", methods=["POST"])
+@api.route("/domains/import", methods=["POST"])
 def import_domains_from_csv():
     if "file" not in request.files:
         return {"message": "No file provided"}, 400
@@ -94,23 +96,23 @@ def import_domains_from_csv():
 
 
 
-@courses_api.route('/departments', methods=['GET'])
-@courses_api.route('/departments/', methods=['GET'])
+@api.route('/departments', methods=['GET'])
+@api.route('/departments/', methods=['GET'])
 def list_departments():
     units = get_departments()    
     return jsonify([{"id": unit.id, 
                      "name": unit.name} 
                             for unit in units])
 
-@courses_api.route('/labs', methods=['GET'])
-@courses_api.route('/labs/', methods=['GET'])
+@api.route('/labs', methods=['GET'])
+@api.route('/labs/', methods=['GET'])
 def list_labs():
     units = get_labs()    
     return jsonify([{"id": unit.id, 
                      "name": unit.name} 
                             for unit in units])
 
-@courses_api.route("/units/import", methods=["POST"])
+@api.route("/units/import", methods=["POST"])
 def import_units_from_csv():
     if "file" not in request.files:
         return {"message": "No file provided"}, 400

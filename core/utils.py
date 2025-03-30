@@ -2,17 +2,18 @@ import os
 import json
 from functools import wraps
 from datetime import datetime
+from importlib import import_module
 
 from flask import Flask, Blueprint, session
 from flask import jsonify, redirect, url_for
 from flask_paginate import Pagination
 from flask_login import current_user, login_required
+from flasgger import swag_from
 import markdown as md
 
-from pages.constants import JINJA_CONSTANTS
-from .configs import config, babel
-from .configs import db, migrate
-from .configs import login_manager, principal
+from .config import config, babel, swagger
+from .config import db, migrate
+from .config import login_manager, principal
 from .constants import PAGES_DIR, SERVICES_DIR, ENCODINGS, CORE_DIR
 
 
@@ -36,6 +37,15 @@ def create_app(name, env_name='dev'):
     login_manager.init_app(app)
     principal.init_app(app)
 
+    # initialisation de la documentation des api
+    app.config['SWAGGER'] = {
+        'title': 'Pigal API',
+        "description": "Pigal API documentation",
+        "version": "1.0.0",
+        'uiversion': 3
+    }
+    swagger.init_app(app=app)
+
     # initialisation des langues
     babel.init_app(app, locale_selector=get_locale)
 
@@ -43,8 +53,33 @@ def create_app(name, env_name='dev'):
     app.jinja_env.globals.update(get_locale=get_locale)
     app.jinja_env.globals.update(default_deadline=default_deadline)
     app.jinja_env.globals.update(url_for_entry=url_for_entry)
-    app.jinja_env.globals.update(JINJA_CONSTANTS)
+    # app.jinja_env.globals.update(JINJA_CONSTANTS)
+
+    # pages or services registration
+    register_services(app)
+    register_pages(app)
     return app
+
+
+# PAGES/SERVICES REGISTRATION
+
+def register_pages(app):
+    if os.path.isdir(PAGES_DIR):
+        print('Register pages')
+
+
+def register_services(app):
+    if os.path.isdir(SERVICES_DIR):
+        for name in os.listdir(SERVICES_DIR):
+            try:
+                modulename = f'services.{name}.routes'
+                module = import_module(modulename)
+                api = getattr(module, 'api')
+            except ModuleNotFoundError:
+                continue
+            prefix = '/auth' if name == 'auth' else f'/api/{name}'
+            app.register_blueprint(api, url_prefix=prefix)
+            print('Register service:', name)
 
 
 # BLUEPRINT FACTORY METHODS +  SECURITY METHODS
@@ -97,6 +132,12 @@ class Api(Blueprint):
         return decorator
 
 
+    @classmethod
+    def docs(cls, docname, methods=['GET']):
+        """Décorateur pour protéger les routes API avec des rôles spécifiques."""
+        docname = './docs/' + docname
+        return swag_from(docname, methods=methods)
+    
 
 # FILES I/O METHODS
 
