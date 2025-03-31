@@ -20,28 +20,28 @@ def courses1(app):
 
 
 def test_get_courses(client, courses1):
-    response = client.get("/api/courses/")
+    response = client.get("/courses-api/")
     assert response.status_code == 200
     assert len(response.json) == 3
 
 def test_get_courses_by_domain(client, courses1):
-    response = client.get("/api/courses/?domain=ECO")
+    response = client.get("/courses-api/?domain=ECO")
     assert response.status_code == 200
     assert len(response.json) == 2
 
 def test_get_courses_by_keywords(client, courses1):
-    response = client.get("/api/courses/?keywords=Econom+4")
+    response = client.get("/courses-api/?keywords=Econom+4")
     assert response.status_code == 200
     assert len(response.json) == 1
 
 def test_get_course_by_id(client, courses1):
-    response = client.get("/api/courses/ECO3/")
+    response = client.get("/courses-api/ECO3/")
     assert response.status_code == 200
     course = response.json
     assert course['id'] == 'ECO3'
 
 def test_get_domains(client, courses1):
-    response = client.get("/api/courses/domains/")
+    response = client.get("/courses-api/domains/")
     assert response.status_code == 200
     assert len(response.json) == 2
 
@@ -62,7 +62,7 @@ def courses2(app, domain1):
 
 def test_update_course(client, courses2):
     data = {"name": "Economie Appliquée 3"}
-    response = client.put("/api/courses/ECO3/", 
+    response = client.put("/courses-api/ECO3/", 
                           data=json.dumps(data), 
                           content_type="application/json")
     
@@ -72,7 +72,7 @@ def test_update_course(client, courses2):
     assert course.name == "Economie Appliquée 3"
 
 def test_delete_course(client, courses2):
-    response = client.delete("/api/courses/ECO3/")
+    response = client.delete("/courses-api/ECO3/")
     assert response.status_code == 204
 
 
@@ -81,7 +81,7 @@ def test_import_csv_to_create_courses(client, domain1):
     csv_data += "ECO3,Economie Monetaire 3,3,ECO\n"
     csv_data += "ECO5,Economie Politique 5,5,ECO"
     data = {"file": (io.BytesIO(csv_data.encode()), "courses.csv")}
-    response = client.post("/api/courses/import", data=data, 
+    response = client.post("/courses-api/import", data=data, 
                            content_type="multipart/form-data")
     
     assert response.status_code == 201
@@ -95,7 +95,7 @@ def test_import_csv_to_update_courses(client, courses2):
     csv_data += "ECO3,Economie Monetaire 3,3,ECO\n"
     csv_data += "ECO5,Economie Politique 5,5,ECO"
     data = {"file": (io.BytesIO(csv_data.encode()), "courses.csv")}
-    response = client.post("/api/courses/import", data=data, 
+    response = client.post("/courses-api/import", data=data, 
                            content_type="multipart/form-data")
     
     assert response.status_code == 201
@@ -109,7 +109,7 @@ def test_import_csv_to_create_domains(client):
     csv_data += "CFA,Comptabilite et Finance\n"
     csv_data += "ECO,Economie Monetaire"
     data = {"file": (io.BytesIO(csv_data.encode()), "domains.csv")}
-    response = client.post("/api/courses/domains/import", data=data, 
+    response = client.post("/courses-api/domains/import", data=data, 
                            content_type="multipart/form-data")
     
     assert response.status_code == 201
@@ -123,7 +123,7 @@ def test_import_csv_to_update_domains(client, domain1):
     csv_data += "CFA,Comptabilite et Finance\n"
     csv_data += "ECO,Economie Monetaire"
     data = {"file": (io.BytesIO(csv_data.encode()), "domains.csv")}
-    response = client.post("/api/courses/domains/import", data=data, 
+    response = client.post("/courses-api/domains/import", data=data, 
                            content_type="multipart/form-data")
     
     assert response.status_code == 201

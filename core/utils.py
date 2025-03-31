@@ -82,7 +82,7 @@ def register_services(app):
                     modulename = f'services.{name}.routes'
                     module = import_module(modulename)
                     api = getattr(module, 'api')
-                    prefix = '/auth' if name == 'auth' else f'/api/{name}'
+                    prefix = '/auth' if name == 'auth' else f'/{name}-api'
                     app.register_blueprint(api, url_prefix=prefix)
                     print('Register service:', name)
                 except (ModuleNotFoundError, AttributeError):
