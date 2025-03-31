@@ -122,7 +122,7 @@ def create_ui(name, importname):
               static_folder='static')
 
 class Ui(Blueprint):
-    
+
     @classmethod
     def roles_accepted(cls, *roles):
         """Décorateur pour protéger les routes Flask qui renvoient des pages HTML."""

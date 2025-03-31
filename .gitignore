@@ -183,7 +183,7 @@ config/*.yaml
 core/store/*.sqlite
 core/store/*.db
 core/store/__pycache__/
-**/_store/*.db
+tests/data/*.db
 
 # Logs and debugging
 logs/
