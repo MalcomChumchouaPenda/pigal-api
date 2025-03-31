@@ -1,6 +1,6 @@
 
 from core.config import db
-from .schemas import User, Role
+from .models import User, Role
 
 
 def init_data():
