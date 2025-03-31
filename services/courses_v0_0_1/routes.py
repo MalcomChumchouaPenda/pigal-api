@@ -1,14 +1,23 @@
 import io
-from flask import request, jsonify
+import csv
+from flask import request, jsonify, send_file
 from core.utils import create_api
 from core.config import db
 
-from .schemas import Course, Domain
-from .queries import import_courses, import_domains
+from .models import Course, Domain
+from .schemas import CourseSchema, DomainSchema
+from .tasks import (
+    import_courses, 
+    import_domains, 
+    export_courses
+)
 
 
 api = create_api('courses_api', __name__)
 
+
+course_schema = CourseSchema()
+courses_schema = CourseSchema(many=True)
 
 @api.route('/courses', methods=['GET'])
 @api.docs('get_courses.yml')
@@ -24,20 +33,13 @@ def get_courses():
         filters = keywords.replace(' ', '%')
         filters += '%'
         query = query.filter(Course.name.like(filters))
-    courses = query.all()   
-    return jsonify([{"id": course.id, 
-                     "name": course.name, 
-                     "level": course.level, 
-                     "domain": course.domain.name} 
-                            for course in courses])
+    courses = query.all()
+    return courses_schema.dump(courses)   
 
 @api.route("/courses/<course_id>", methods=["GET"])
 def get_course(course_id):
     course = Course.query.filter_by(id=course_id).first()
-    return jsonify({"id": course.id, 
-                     "name": course.name, 
-                     "level": course.level,
-                     "domain": course.domain.name})
+    return course_schema.dump(course)
 
 @api.route("/courses/<course_id>", methods=["PUT"])
 def update_course(course_id):
@@ -76,13 +78,26 @@ def import_courses_from_csv():
         imported_count, errors = import_courses(csv_file)
     return {"imported": imported_count, "errors":errors}, 201
 
+@api.route("/courses/csv", methods=["GET"])
+@api.roles_accepted('admin', 'teacher')
+def export_courses_from_csv():
+    csv_data = export_courses()
+    return send_file(
+        io.BytesIO(csv_data.encode()),
+        as_attachment=True,
+        download_name="courses.csv",
+        mimetype="text/csv"
+    )
+
+
+domain_schema = DomainSchema()
+domains_schema = DomainSchema(many=True)
 
 @api.route('/domains', methods=['GET'])
+@api.docs('get_domains.yml', methods=["GET"])
 def get_domains():
-    domains = Domain.query.all()   
-    return jsonify([{"id": domain.id, 
-                     "name": domain.name} 
-                        for domain in domains])
+    domains = Domain.query.all() 
+    return domains_schema.dump(domains)
 
 
 @api.route("/domains/csv", methods=["POST"])

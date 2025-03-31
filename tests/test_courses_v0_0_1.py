@@ -1,9 +1,17 @@
 
 import io
+import csv
 import json
 import pytest
 from core.config import db
-from services.courses_v0_0_1.schemas import Course, Domain
+from services.courses_v0_0_1.models import Course, Domain
+
+
+@pytest.fixture
+def admin_client(client):
+    data = {"id": "admin1", "password": "adminpass"}
+    client.post('/auth/login', json=data)
+    return client
 
 
 @pytest.fixture
@@ -41,12 +49,6 @@ def test_get_course_by_id(client, courses_demo1):
     assert course['id'] == 'ECO3'
 
 
-def test_get_domains(client, courses_demo1):
-    response = client.get("/courses-api/v0.0.1/domains")
-    assert response.status_code == 200
-    assert len(response.json) == 2
-
-
 @pytest.fixture
 def courses_demo2(app):
     domain = Domain(id="ECO", name="Economie")
@@ -72,7 +74,6 @@ def test_update_course(client, courses_demo2):
 def test_delete_course(client, courses_demo2):
     response = client.delete("/courses-api/v0.0.1/courses/ECO3")
     assert response.status_code == 204
-
 
 def test_import_csv_to_create_courses(client, courses_demo2):
     csv_data = "code,nom,niveau,code_filiere\n"
@@ -102,6 +103,30 @@ def test_import_csv_to_update_courses(client, courses_demo2):
     courses = Course.query.all()
     assert len(courses) == 2
 
+def test_export_courses_as_csv(admin_client, courses_demo2):
+    response = admin_client.get("/courses-api/v0.0.1/courses/csv")
+    assert response.status_code == 200
+    assert "attachment; filename=courses.csv" in response.headers["Content-Disposition"]
+
+    csv_data = response.data.decode()
+    reader = csv.reader(io.StringIO(csv_data))
+    header = next(reader)
+    assert header == ["code","nom","niveau","code_filiere"]
+
+
+@pytest.fixture
+def courses_demo3(app):
+    domain1 = Domain(id="ECO", name="Economie")
+    domain2 = Domain(id="INFO", name="Informatique")
+    db.session.add_all([domain1, domain2])
+    db.session.commit()
+
+
+def test_get_domains(client, courses_demo3):
+    response = client.get("/courses-api/v0.0.1/domains")
+    assert response.status_code == 200
+    assert len(response.json) == 2
+
 def test_import_csv_to_create_domains(client):
     csv_data = "code_filiere,nom_filiere\n"
     csv_data += "CFA,Comptabilite et Finance\n"
@@ -116,7 +141,7 @@ def test_import_csv_to_create_domains(client):
     domains = Domain.query.all()
     assert len(domains) == 2
     
-def test_import_csv_to_update_domains(client, courses_demo2):
+def test_import_csv_to_update_domains(client, courses_demo3):
     csv_data = "code_filiere,nom_filiere\n"
     csv_data += "CFA,Comptabilite et Finance\n"
     csv_data += "ECO,Economie Monetaire"
@@ -128,4 +153,4 @@ def test_import_csv_to_update_domains(client, courses_demo2):
     assert response.json["errors"] == []
     assert response.json["imported"] == 2
     domains = Domain.query.all()
-    assert len(domains) == 2
+    assert len(domains) == 3

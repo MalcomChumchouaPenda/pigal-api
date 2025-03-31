@@ -1,7 +1,8 @@
 
+import io
 import csv
 from core.config import db
-from .schemas import Course, Domain
+from .models import Course, Domain
 
 
 def import_courses(csv_file):
@@ -24,6 +25,21 @@ def import_courses(csv_file):
         imported_count += 1
     session.commit()
     return imported_count, errors
+
+
+def export_courses():
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["code", "nom", "niveau", "code_filiere"])
+
+    courses = Course.query.all()
+    for course in courses:
+        writer.writerow([course.id, 
+                         course.name, 
+                         course.level, 
+                         course.domain.name])
+    output.seek(0)
+    return output.getvalue()
 
 
 def import_domains(csv_file):

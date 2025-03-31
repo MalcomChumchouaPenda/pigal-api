@@ -13,7 +13,7 @@ from flasgger import swag_from
 import markdown as md
 
 from .config import config, babel, swagger
-from .config import db, migrate
+from .config import db, migrate, ma
 from .config import login_manager, principal, _TEST_BINDS
 from .constants import PAGES_DIR, SERVICES_DIR, ENCODINGS, CORE_DIR
 
@@ -57,6 +57,7 @@ def create_app(name, env_name='dev'):
     # initialisation de la base de donnees
     db.init_app(app)
     migrate.init_app(app, db)
+    ma.init_app(app)
     with app.app_context():
         if env_name in ['dev', 'test']:
             db.drop_all()

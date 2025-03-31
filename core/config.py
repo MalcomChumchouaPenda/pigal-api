@@ -6,6 +6,7 @@ from flask_login import LoginManager
 from flask_principal import Principal
 from flask_babel import Babel
 from flask_migrate import Migrate
+from flask_marshmallow import Marshmallow
 from flasgger import Swagger
 
 from .constants import (
@@ -18,6 +19,7 @@ from .constants import (
 # database objects
 db = SQLAlchemy()
 migrate = Migrate()
+ma = Marshmallow()
 
 # security objects
 login_manager = LoginManager()

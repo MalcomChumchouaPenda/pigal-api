@@ -1,7 +1,7 @@
 
 from core.utils import get_path
 from .schemas import Course
-from .queries import import_courses, import_domains
+from .tasks import import_courses, import_domains
 from .routes import api
 
 

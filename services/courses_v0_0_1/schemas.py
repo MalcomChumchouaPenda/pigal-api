@@ -1,20 +1,23 @@
 
-from core.config import db
+from core.config import ma
+from .models import Course, Domain
 
 
-CASCADE = "all, delete-orphan"
+class DomainSchema(ma.Schema):
+    class Meta:
+        model = Domain
+
+    id = ma.Str()
+    name = ma.Str()
 
 
-class Domain(db.Model):
-    __bind_key__ = 'courses'
-    id = db.Column(db.String(15), primary_key=True)
-    name = db.Column(db.String(100), nullable=False, unique=True)
-    
-class Course(db.Model):
-    __bind_key__ = 'courses'
-    id = db.Column(db.String(15), primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    level = db.Column(db.Integer, nullable=False)
-    domain_id = db.Column(db.String(15), db.ForeignKey('domain.id'))    
-    domain = db.relationship('Domain', backref=db.backref('courses', cascade=CASCADE))
-    
+class CourseSchema(ma.Schema):
+    class Meta:
+        model = Course
+
+    id = ma.Str()
+    name = ma.Str()
+    level = ma.Int()
+    domain = ma.Function(lambda obj:obj.domain.name)
+
+

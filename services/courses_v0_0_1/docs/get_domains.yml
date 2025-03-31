@@ -1,0 +1,8 @@
+Get all domains
+---
+tags:
+  - domains
+responses:
+  200:
+    description: A list of domains
+    
