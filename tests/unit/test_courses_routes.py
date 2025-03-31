@@ -111,7 +111,7 @@ def courses2(app, diplomas1, domain1):
 
 def test_update_course(client, courses2):
     data = {"name": "Economie Appliquée 3"}
-    response = client.put("/api/courses/ECO3", 
+    response = client.put("/api/courses/ECO3/", 
                           data=json.dumps(data), 
                           content_type="application/json")
     
@@ -121,7 +121,7 @@ def test_update_course(client, courses2):
     assert course.name == "Economie Appliquée 3"
 
 def test_delete_course(client, courses2):
-    response = client.delete("/api/courses/ECO3")
+    response = client.delete("/api/courses/ECO3/")
     assert response.status_code == 204
 
 

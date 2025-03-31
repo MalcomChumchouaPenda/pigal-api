@@ -34,7 +34,8 @@ def create_app(name, env_name='dev'):
         'title': 'Pigal API',
         "description": "Pigal API documentation",
         "version": "1.0.0",
-        'uiversion': 3
+        'uiversion': 3,
+        'openapi': '3.0.9'
     }
     swagger.init_app(app=app)
 

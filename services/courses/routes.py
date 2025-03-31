@@ -18,8 +18,8 @@ api = create_api('courses_api', __name__)
 
 
 @api.route('/', methods=['GET'])
-@api.docs('list_courses.yml')
-def list_courses():
+@api.docs('get_courses.yml')
+def get_courses():
     training_id = request.args.get('training')
     unit_id = request.args.get('unit')
     courses = get_courses(training_id=training_id, unit_id=unit_id)    
@@ -31,7 +31,7 @@ def list_courses():
                      "diploma": course.diploma.name} 
                             for course in courses])
 
-@api.route("/<course_id>", methods=["PUT"])
+@api.route("/<course_id>/", methods=["PUT"])
 def update_course(course_id):
     course = Course.query.filter_by(id=course_id).first()
     if not course:
@@ -44,7 +44,7 @@ def update_course(course_id):
     db.session.commit()
     return {"message": "Course updated"}, 200
 
-@api.route("/<course_id>", methods=["DELETE"])
+@api.route("/<course_id>/", methods=["DELETE"])
 def delete_course(course_id):
     course = Course.query.filter_by(id=course_id).first()
     if not course:
@@ -69,7 +69,6 @@ def import_courses_from_csv():
     return {"imported": imported_count, "errors":errors}, 201
 
 
-@api.route('/domains', methods=['GET'])
 @api.route('/domains/', methods=['GET'])
 def list_domains():
     training_id = request.args.get('training')
@@ -95,8 +94,6 @@ def import_domains_from_csv():
     return {"imported": imported_count, "errors":errors}, 201
 
 
-
-@api.route('/departments', methods=['GET'])
 @api.route('/departments/', methods=['GET'])
 def list_departments():
     units = get_departments()    
@@ -104,7 +101,6 @@ def list_departments():
                      "name": unit.name} 
                             for unit in units])
 
-@api.route('/labs', methods=['GET'])
 @api.route('/labs/', methods=['GET'])
 def list_labs():
     units = get_labs()    
