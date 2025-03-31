@@ -4,10 +4,26 @@ tags:
   - courses
 requestBody:
   content:
-    image/png:
-      schema:
-        type: string
-        format: binary
+    multipart/form-data:
+      schema:                                         # <- request payloads
+        type: object
+        properties:                                   # <- request parts
+          file:
+            type: string
+            format: binary
 responses:
   200:
-    description: Confirmation message
+    description: Confirmation message                 # <- ok response description
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:                                 # <- response parts
+            errors:
+              description: List of errors encountered
+              type: array
+              items:
+                type: string
+            imported:
+              type: integer
+              description: Number of courses imported.
