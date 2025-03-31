@@ -173,7 +173,11 @@ class Api(Blueprint):
         """Décorateur pour protéger les routes API avec des rôles spécifiques."""
         docname = './docs/' + docname
         return swag_from(docname, methods=methods)
-    
+
+
+# class RestApi:
+#     """Restful Api created"""
+
 
 # FILES I/O METHODS
 

@@ -5,19 +5,15 @@ from core.utils import create_api
 from core.config import db
 
 from .models import Course, Domain
-from .schemas import CourseSchema, DomainSchema
-from .tasks import (
-    import_courses, 
-    import_domains, 
-    export_courses
-)
+from .schemas import course_schema, courses_schema
+from .schemas import domain_schema, domains_schema
+from .tasks import import_courses, import_domains, export_courses
 
 
 api = create_api('courses_api', __name__)
 
 
-course_schema = CourseSchema()
-courses_schema = CourseSchema(many=True)
+# COURSES ROUTES
 
 @api.route('/courses', methods=['GET'])
 @api.docs('get_courses.yml')
@@ -36,10 +32,12 @@ def get_courses():
     courses = query.all()
     return courses_schema.dump(courses)   
 
+
 @api.route("/courses/<course_id>", methods=["GET"])
 def get_course(course_id):
     course = Course.query.filter_by(id=course_id).first()
     return course_schema.dump(course)
+
 
 @api.route("/courses/<course_id>", methods=["PUT"])
 def update_course(course_id):
@@ -50,9 +48,9 @@ def update_course(course_id):
     data = request.get_json()
     for key, value in data.items():
         setattr(course, key, value)
-
     db.session.commit()
     return {"message": "Course updated"}, 200
+
 
 @api.route("/courses/<course_id>", methods=["DELETE"])
 def delete_course(course_id):
@@ -63,6 +61,7 @@ def delete_course(course_id):
     db.session.delete(course)
     db.session.commit()
     return "", 204
+
 
 @api.route("/courses/csv", methods=["POST"])
 @api.docs('import_courses.yml', methods=["POST"])
@@ -78,6 +77,7 @@ def import_courses_from_csv():
         imported_count, errors = import_courses(csv_file)
     return {"imported": imported_count, "errors":errors}, 201
 
+
 @api.route("/courses/csv", methods=["GET"])
 @api.roles_accepted('admin', 'teacher')
 def export_courses_from_csv():
@@ -90,8 +90,7 @@ def export_courses_from_csv():
     )
 
 
-domain_schema = DomainSchema()
-domains_schema = DomainSchema(many=True)
+# DOMAINS ROUTES
 
 @api.route('/domains', methods=['GET'])
 @api.docs('get_domains.yml', methods=["GET"])
@@ -112,3 +111,4 @@ def import_domains_from_csv():
     with io.TextIOWrapper(file) as csv_file:
         imported_count, errors = import_domains(csv_file)
     return {"imported": imported_count, "errors":errors}, 201
+
