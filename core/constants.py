@@ -3,6 +3,9 @@
 import os
 
 
+SERVICE_NAME_EXP = '([a-z][a-z0-9]*)_v[0-9_]+'
+
+
 CORE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(CORE_DIR)
 STORE_DIR = os.path.join(CORE_DIR, 'store')

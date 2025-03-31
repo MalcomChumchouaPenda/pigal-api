@@ -1,0 +1,13 @@
+Import all courses
+---
+tags:
+  - courses
+requestBody:
+  content:
+    image/png:
+      schema:
+        type: string
+        format: binary
+responses:
+  200:
+    description: Confirmation message

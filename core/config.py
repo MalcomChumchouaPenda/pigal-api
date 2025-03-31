@@ -1,12 +1,19 @@
 import os
+import re
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_principal import Principal
 from flask_babel import Babel
 from flask_migrate import Migrate
 from flasgger import Swagger
-from .constants import SERVICES_DIR, STORE_DIR, ROOT_DIR, TESTS_DIR
 
+from .constants import (
+    SERVICES_DIR, 
+    STORE_DIR, 
+    ROOT_DIR, 
+    TESTS_DIR
+)
 
 # database objects
 db = SQLAlchemy()
@@ -35,9 +42,7 @@ swagger_config = {
     "swagger_ui": True,
     "specs_route": "/apidocs/"
 }
-
 swagger = Swagger(config=swagger_config)
-# swagger = Swagger()
 
 
 # default database
@@ -53,10 +58,16 @@ _PROD_BINDS = {}
 _TEST_BINDS = {}
 for name in os.listdir(SERVICES_DIR):
     api_dir = os.path.join(SERVICES_DIR, name)
-    if not name.startswith('_') and os.path.isdir(api_dir):
-        _DEV_BINDS[name] = f"sqlite:///{os.path.join(STORE_DIR, name + '.db')}"
-        _PROD_BINDS[name] = f"mysql://{_MYSQL_USER}:{_MYSQL_PWD}@localhost/{name}"
-        _TEST_BINDS[name] = f"sqlite:///{os.path.join(TESTS_DIR, '_store', name + '.db')}"
+    if name == 'auth':
+        dbname = 'auth'
+    else:
+        dbnames = re.findall('([a-z][a-z0-9]*)_v[0-9_]+', name)
+        if len(dbnames) != 1:
+            continue
+        dbname = dbnames[0]
+    _DEV_BINDS[dbname] = f"sqlite:///{os.path.join(STORE_DIR, dbname + '.db')}"
+    _PROD_BINDS[dbname] = f"mysql://{_MYSQL_USER}:{_MYSQL_PWD}@localhost/{dbname}"
+    _TEST_BINDS[dbname] = f"sqlite:///{os.path.join(TESTS_DIR, 'data', dbname + '.db')}"
 
 
 class Config:

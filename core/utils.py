@@ -1,4 +1,5 @@
 import os
+import re
 import json
 from functools import wraps
 from datetime import datetime
@@ -13,7 +14,7 @@ import markdown as md
 
 from .config import config, babel, swagger
 from .config import db, migrate
-from .config import login_manager, principal
+from .config import login_manager, principal, _TEST_BINDS
 from .constants import PAGES_DIR, SERVICES_DIR, ENCODINGS, CORE_DIR
 
 
@@ -24,6 +25,7 @@ def create_app(name, env_name='dev'):
                 template_folder='core/templates')
     app.config.from_object(config[env_name])
     # print(app.root_path)
+    # print(config[env_name].SQLALCHEMY_BINDS, _TEST_BINDS)
 
     # initialisation de la securite
     login_manager.init_app(app)
@@ -78,15 +80,27 @@ def register_pages(app):
 def register_services(app):
     if os.path.isdir(SERVICES_DIR):
         for name in os.listdir(SERVICES_DIR):
-                try:
-                    modulename = f'services.{name}.routes'
-                    module = import_module(modulename)
-                    api = getattr(module, 'api')
-                    prefix = '/auth' if name == 'auth' else f'/{name}-api'
-                    app.register_blueprint(api, url_prefix=prefix)
-                    print('Register service:', name)
-                except (ModuleNotFoundError, AttributeError):
+            if name == 'auth':
+                url_prefix = '/auth'
+            else:
+                nameparts = re.findall('([a-z][a-z0-9]*)_(v[0-9_]+)', name)
+                # print('found', name, nameparts)
+                if len(nameparts) != 1:
+                    print('Ignore folder:', name)
                     continue
+                rootname, version = nameparts[0]
+                version = version.replace('_', '.')
+                url_prefix = f'/{rootname}-api/{version}'
+                # print('url_prefix', url_prefix)
+
+            try:
+                modulename = f'services.{name}.routes'
+                module = import_module(modulename)
+                api = getattr(module, 'api')
+                app.register_blueprint(api, url_prefix=url_prefix)
+                print('Register service:', name)
+            except (ModuleNotFoundError, AttributeError):
+                continue
 
 def init_data():
     if os.path.isdir(SERVICES_DIR):
@@ -107,9 +121,8 @@ def create_ui(name, importname):
               template_folder='templates', 
               static_folder='static')
 
-
 class Ui(Blueprint):
-
+    
     @classmethod
     def roles_accepted(cls, *roles):
         """Décorateur pour protéger les routes Flask qui renvoient des pages HTML."""
@@ -129,7 +142,12 @@ class Ui(Blueprint):
 
 
 def create_api(name, importname):
-    return Api(name, importname)
+    storename = importname.replace('.', '/')
+    storename = storename.replace('routes', 'store')
+    # print('create api', importname, storename)
+    api = Api(name, importname)
+    api.store_folder = f'/{storename}'
+    return api
 
 
 class Api(Blueprint):

@@ -10,7 +10,7 @@ from .queries import import_courses, import_domains
 api = create_api('courses_api', __name__)
 
 
-@api.route('/', methods=['GET'])
+@api.route('/courses', methods=['GET'])
 @api.docs('get_courses.yml')
 def get_courses():
     query = Course.query
@@ -31,7 +31,7 @@ def get_courses():
                      "domain": course.domain.name} 
                             for course in courses])
 
-@api.route("/<course_id>/", methods=["GET"])
+@api.route("/courses/<course_id>", methods=["GET"])
 def get_course(course_id):
     course = Course.query.filter_by(id=course_id).first()
     return jsonify({"id": course.id, 
@@ -39,7 +39,7 @@ def get_course(course_id):
                      "level": course.level,
                      "domain": course.domain.name})
 
-@api.route("/<course_id>/", methods=["PUT"])
+@api.route("/courses/<course_id>", methods=["PUT"])
 def update_course(course_id):
     course = Course.query.filter_by(id=course_id).first()
     if not course:
@@ -52,7 +52,7 @@ def update_course(course_id):
     db.session.commit()
     return {"message": "Course updated"}, 200
 
-@api.route("/<course_id>/", methods=["DELETE"])
+@api.route("/courses/<course_id>", methods=["DELETE"])
 def delete_course(course_id):
     course = Course.query.filter_by(id=course_id).first()
     if not course:
@@ -62,8 +62,8 @@ def delete_course(course_id):
     db.session.commit()
     return "", 204
 
-@api.route("/import", methods=["POST"])
-@api.docs('import_courses_from_csv.yml', methods=["POST"])
+@api.route("/courses/csv", methods=["POST"])
+@api.docs('import_courses.yml', methods=["POST"])
 def import_courses_from_csv():
     if "file" not in request.files:
         return {"message": "No file provided"}, 400
@@ -77,7 +77,7 @@ def import_courses_from_csv():
     return {"imported": imported_count, "errors":errors}, 201
 
 
-@api.route('/domains/', methods=['GET'])
+@api.route('/domains', methods=['GET'])
 def get_domains():
     domains = Domain.query.all()   
     return jsonify([{"id": domain.id, 
@@ -85,7 +85,7 @@ def get_domains():
                         for domain in domains])
 
 
-@api.route("/domains/import", methods=["POST"])
+@api.route("/domains/csv", methods=["POST"])
 def import_domains_from_csv():
     if "file" not in request.files:
         return {"message": "No file provided"}, 400
