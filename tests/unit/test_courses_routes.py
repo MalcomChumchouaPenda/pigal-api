@@ -45,6 +45,17 @@ def test_get_courses_by_unit(client, courses1):
     assert response.status_code == 200
     assert len(response.json) == 1
 
+def test_get_courses_by_keywords(client, courses1):
+    response = client.get("/api/courses/?keywords=X+m")
+    assert response.status_code == 200
+    assert len(response.json) == 0
+
+def test_get_course_by_id(client, courses1):
+    response = client.get("/api/courses/Xn3/")
+    assert response.status_code == 200
+    course = response.json
+    assert course['id'] == 'Xn3'
+
 
 def test_get_domains(client, courses1):
     response = client.get("/api/courses/domains/")

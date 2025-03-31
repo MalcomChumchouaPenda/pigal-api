@@ -4,41 +4,6 @@ from core.config import db
 from .schemas import Course, Training, Unit, Domain, Diploma
 
 
-def get_course(id):
-    return Course.query.filter_by(id=id).first()
-
-def get_courses(training_id=None, unit_id=None, keywords=None):
-    query = Course.query.join(Domain)
-    if training_id:
-        query = query.join(Training)
-        query = query.filter(Training.id == training_id)
-    if unit_id:
-        query = query.join(Unit)
-        query = query.filter(Unit.id == unit_id)
-    if keywords:
-        filters = keywords.replace(' ', '%')
-        filters += '%'
-        query = query.filter(Course.name.like(filters))
-    return query.all()
-
-def get_domains(training_id=None, unit_id=None):
-    query = Domain.query
-    if training_id:
-        query = query.join(Training)
-        query = query.filter(Training.id == training_id)
-    if unit_id:
-        query = query.join(Unit)
-        query = query.filter(Unit.id == unit_id)
-    return query.all()
-
-def get_departments():
-    return Unit.query.filter_by(type='D').all()
-
-def get_labs():
-    return Unit.query.filter_by(type='L').all()
-
-def get_trainings():
-    return Training.query.all()
 
 
 def import_courses(csv_file):
