@@ -2,7 +2,7 @@
 
 import os
 
-
+CORE_VERSION = '0.0.1'
 SERVICE_NAME_EXP = '([a-z][a-z0-9]*)_v[0-9_]+'
 
 

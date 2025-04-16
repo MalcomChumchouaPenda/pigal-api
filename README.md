@@ -18,6 +18,7 @@ Ce template permet de devolopper des services utilisables sur des sites ou porta
 │   ├── /courses               # Service de gestion des formations (Demo)
 │
 ├── /core                      # Fonctions, paramètres, ressources et routes principales
+├── /pages                     # Pages demo Flask ou UI
 ├── /tests                     # Tests unitaires et d'intégration
 ├── /migrations                # Fichiers de migration pour SQLAlchemy
 ```
@@ -39,10 +40,10 @@ Le dossier `core/` contient les fichiers et ressources essentielles pour le bon 
 Le dossier `tests/` regroupe les tests unitaires et d'intégration pour garantir la fiabilité de l'application.
 ```
 /tests
-├── /unit                  # Tests unitaires pour les fonctions et modules
-├── /integration           # Tests d'intégration pour les routes et l'API
+├── /data                  # Donnees pour les Tests unitaires
 ├── conftest.py            # Configuration de pytest (fixtures, etc.)
-├── test_app.py            # Test principal de l'application
+├── test_service_a.py      # Tests unitaires du service A
+├── test_service_b.py      # Tests unitaires du service B
 ```
 
 
@@ -51,18 +52,19 @@ Le dossier `services/` contient les microservices gérant différentes fonctionn
 ```
 /services
 ├── /auth                  # Gestion des utilisateurs
-│   ├── routes.py          # Routes de l'API Auth
-│   ├── schemas.py         # Modèles de base de données pour Auth
-│   ├── queries.py         # Requêtes de base de données pour Auth
 │   ├── defaults.py        # Generateurs des donnees par defaut de l'API Auth
+│   ├── models.py          # Modèles de base de données pour Auth
+│   ├── routes.py          # Routes de l'API Auth
+│   ├── schemas.py         # Schemas externes de la base de données
+│   ├── tasks.py           # Taches pour Auth
 │
 ├── /courses               # API pour gérer les formations (demo)
+│   ├── defaults.py        # Generateurs des donnees par defaut pour Formations
+│   ├── models.py          # Modèles de base de données pour l'API Formations
 │   ├── routes.py          # Routes de l'API Formations
 │   ├── schemas.py         # Modèles de base de données pour Formations
-│   ├── queries.py         # Requêtes de base de données pour Formations
-│   ├── defaults.py        # Generateurs des donnees par defaut pour Formations
+│   ├── tasks.py           # Taches pour l'API Formations
 ```
-
 
 
 ## Installation et Lancement
